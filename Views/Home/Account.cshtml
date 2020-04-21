@@ -1,0 +1,45 @@
+<h1>Account Details are Here</h1>
+@model BankAccount
+<h1>Welcome , @ViewBag.UserLoggedIn.FirstName</h1>
+<a class="btn btn-danger" asp-action="Logout">Logout</a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            @{
+                int sum = 0;
+                foreach (var item in ViewBag.UserBankDetails)
+                {
+                    sum += item.TAmount;
+                }
+            }
+            <h1>Total Balance : @sum</h1>
+            <form asp-action="MakeTransaction" method="post" class="form-group">
+                <p>
+                    <p><span asp-validation-for="TAmount"></span></p>
+                    <label asp-for="TAmount"></label>
+                    <input asp-for="TAmount" class="form-control" min="-@sum">
+                </p>
+                <input type="submit" class="btn btn-success" value="SUbmit">
+            </form>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td>Amount</td>
+                        <td>Transaction Date</td>
+                    </tr>
+                </thead>
+                <tbody>
+                     
+                    @foreach (var item in ViewBag.UserBankDetails)
+                    {
+                        <tr>
+                            <td>@item.TAmount</td>
+                            <td>@item.TDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
